@@ -136,7 +136,7 @@ AUTH_USER_MODEL = 'authentication.CustomUser' # authentication is the app name
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 
-import django_heroku
-django_heroku.setting(
-    locals()
-)
+# import django_heroku
+# django_heroku.setting(
+#     locals()
+# )
