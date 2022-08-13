@@ -6,3 +6,8 @@ class UserSerializer(serializers.ModelSerializer):
         model = CustomUser
         fields = ['id','username', 'realname', 'password']
 
+    # def to_representation(self, instance):
+    #     return {
+    #         "id": instance.id,
+    #         "username": instance.username
+    #     }
