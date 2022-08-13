@@ -20,6 +20,7 @@ class PostSerializer(serializers.ModelSerializer):
 
     images = serializers.SerializerMethodField() #원래 모델에 없는 필드인데, 특정 필드를 내려주고 싶을떄 쓰는 것임 I mean to add to JSON
     #https://eunjin3786.tistory.com/268
+    
 
     # author = UserSerializer()#read only 는 여기서 user 자료를 고치고 싶지 않을때 쓰이는듯.
     # read only 추가하니 post create 할때 django.db.utils.IntegrityError: NOT NULL constraint failed: BlogApp_post.author_id 에러 뜸. 왜일까
@@ -30,7 +31,6 @@ class PostSerializer(serializers.ModelSerializer):
         # image = obj.postimage_set.all()
         image = obj.image.all()
         return PostImageSerializer(instance=image, many=True).data
-
 
     class Meta:
         model = Post
@@ -59,8 +59,20 @@ class PostSerializer(serializers.ModelSerializer):
         for image_data in image_set.getlist('images'):
             print('image_data: ', image_data)
             PostImage.objects.create(post = instance, image=image_data)
+        # print('instace: ', instance.data)
         return instance
 
+    def to_representation(self, instance):
+        representation = super().to_representation(instance)
+        representation['author_username'] = instance.author.username,
+        representation['like_users_count'] = instance.like_users.count() 
+        representation.pop('author')
+        representation.pop('like_users')
+        # print(representation)
+        return representation
+
+    #https://dev.to/abdenasser/my-personal-django-rest-framework-serializer-notes-2i22
+    #https://stackoverflow.com/questions/37985581/how-to-dynamically-remove-fields-from-serializer-output
     
 
     #중첩 serializer는    
@@ -75,9 +87,11 @@ class PostSerializer(serializers.ModelSerializer):
     #         "created_at": instance.created_at,
     #         'like_users': instance.like_users.count(),
     #         # 'like_users': instance.like_users,
-    #         # "images": get_images()
-    #         # "images": PostImageSerializer(instance.images).data,
+    #         "images": instance.images
+    #         # "images": PostImageSerializer.data,
     #     }
+
+    
 
 
 

@@ -1,6 +1,7 @@
 from xml.etree.ElementTree import Comment
 from django.shortcuts import render
 from requests import request
+from authentication.models import CustomUser
 from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
@@ -18,6 +19,7 @@ from authentication.funts import login_status
 def post_list(request):
     if request.method == 'GET':
         posts = Post.objects.all()
+    
         serializer = PostSerializer(posts, many=True)
         return Response(serializer.data)
 
@@ -34,6 +36,8 @@ def post_list(request):
             return Response(data = message, status = status.HTTP_400_BAD_REQUEST)
 
 
+
+
 @api_view(['GET', 'PUT', 'DELETE'])
 def post_detail(request, pk):
     """
@@ -47,6 +51,22 @@ def post_detail(request, pk):
 
     if request.method == 'GET':
         serializer = PostSerializer(post)
+ 
+        # user = CustomUser.objects.get(id = serializer.data['author'])
+        # username = user.username
+
+        # tmp = serializer.data
+
+        # tmp['author'] = username
+        # tmp['like_users'] = post.like_users.count()
+        
+        # print(tmp['author'])
+        # print(tmp)
+        
+
+        # return Response(tmp)
+
+
         return Response(serializer.data)
 
     # if request.method == 'GET':
@@ -69,6 +89,7 @@ def post_detail(request, pk):
         elif request.method == 'DELETE':
             post.delete()
             return Response(status=status.HTTP_204_NO_CONTENT)
+
 
 
 #get comments by post_id 기능

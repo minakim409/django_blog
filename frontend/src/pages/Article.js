@@ -31,6 +31,7 @@ const { TextArea } = Input;
 const Article = () => {
   const { id } = useParams();
   const [post, setPost] = useState();
+  const [postImg, setpostImg] = useState();
   const [allComment, setallComment] = useState();
   const [username, setUsername] = useState("");
   const [commentContent, setcommentContent] = useState("");
@@ -151,6 +152,7 @@ const Article = () => {
   //   </Tooltip>,
   // ];
 
+
   const fetchComments = async () => {
     let res;
     // console.log("comments fetch data!!");
@@ -173,6 +175,7 @@ const Article = () => {
 
   useEffect(() => {
     // console.log("comments use effect!!!");
+    
     fetchComments();
   }, []);
 
@@ -291,7 +294,20 @@ const Article = () => {
                 <h2> Content: {item.content} </h2>
                 {/* <img alt="image" src={item.images[0].image} width={800} height={600} /> */}
 
-                <h2> Author: {item.author} </h2>
+                {/* <h2> Author: {item.author} </h2> */}
+                <h2> Author: {item.author_username} </h2>
+                {item.images &&
+                    item.images.map((img) => (
+                      <img src={img.image} alt="" />
+                      
+                  ))
+                }
+                
+                
+                {/* <img src={item.images[0].image} alt="" /> */}
+
+                {/* {fetchImages} */}
+                
                 <Popconfirm
                   title="Do you wanna delete？"
                   visible={visible}

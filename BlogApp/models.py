@@ -25,7 +25,6 @@ class Post(models.Model):
     # @property
     # def like_count(self):
     #     return self.like_set.count()
-
     
     # def get_images(self):
     #     if self.images:
@@ -40,6 +39,8 @@ class PostImage(models.Model):
    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name= 'image')
    image = models.FileField(upload_to="images/")
 #    image = models.ImageField(blank=True, upload_to="images/", null=True)
+
+
 
 class PostLike(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name= 'post_like')

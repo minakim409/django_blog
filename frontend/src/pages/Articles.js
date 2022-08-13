@@ -90,7 +90,7 @@ const AllPosts = () =>{
           key={item.title}
           actions={[
             <IconText icon={StarOutlined} text="156" key="list-vertical-star-o" />,
-            <IconText icon={LikeOutlined} text={item.like_users} key="list-vertical-like-o" />,
+            <IconText icon={LikeOutlined} text={item.like_users_count} key="list-vertical-like-o" />,
             <IconText icon={MessageOutlined} text="2" key="list-vertical-message" />,
           ]}
           extra={
@@ -104,7 +104,8 @@ const AllPosts = () =>{
           <List.Item.Meta
             avatar={<Avatar src={item.avatar} />}
             title={<a href={`/articles/${item.id}`}>{item.title}</a>}
-            description={item.author.username}
+            // description={item.author.username}
+            description={item.author_username}
           />
           {item.content}
         </List.Item>

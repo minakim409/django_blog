@@ -47,9 +47,9 @@ def login(request):
             return Response(data = message, status = status.HTTP_400_BAD_REQUEST)
             
         else:
-            if user.status == True:
-                message = {"status": "You are already logged in. If you wanna change account, LOGOUT first!"}
-                return Response(data = message, status = status.HTTP_400_BAD_REQUEST)
+            # if user.status == True:
+            #     message = {"status": "You are already logged in. If you wanna change account, LOGOUT first!"}
+            #     return Response(data = message, status = status.HTTP_400_BAD_REQUEST)
 
             if user.password != password: #incorrect password
                 message = {"status": "Incorrect password"}
